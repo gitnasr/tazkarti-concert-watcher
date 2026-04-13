@@ -5,6 +5,8 @@ import type {
   WatcherState,
 } from "./types.js";
 
+const TITLE_CONFIDENCE_THRESHOLD = 0.9;
+
 export function normalizeName(value: string): string {
   return value
     .normalize("NFKD")
@@ -151,6 +153,16 @@ export function scoreCandidate(queryValue: string, candidateValue: string): numb
   return Math.max(contains, Math.min(1, blended));
 }
 
+function scoreEvent(query: string, event: EventRecord): number {
+  const titleScore = scoreCandidate(query, event.name);
+
+  if (titleScore >= TITLE_CONFIDENCE_THRESHOLD) {
+    return titleScore;
+  }
+
+  return scoreCandidate(query, event.description ?? "");
+}
+
 export function selectBestMatch(
   query: string,
   events: EventRecord[],
@@ -158,7 +170,7 @@ export function selectBestMatch(
   let best: MatchResult | null = null;
 
   for (const event of events) {
-    const score = scoreCandidate(query, event.name);
+    const score = scoreEvent(query, event);
 
     if (!best || score > best.score) {
       best = {

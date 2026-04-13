@@ -7,6 +7,7 @@ export type ShowRecord = {
 export type EventRecord = {
   id: number;
   name: string;
+  description?: string;
   startDate?: string;
   minimumPrice?: number;
   venue?: { name?: string | null } | null;

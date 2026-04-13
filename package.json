@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "watch": "tsx src/watch-tazkarti.ts",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test": "tsx --no-cache --test"
   },
   "dependencies": {
     "dotenv": "^16.4.7"
