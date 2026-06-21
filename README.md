@@ -63,3 +63,9 @@ pm2 save
 ```bash
 npm run check
 ```
+
+## Test
+
+```bash
+npm test
+```

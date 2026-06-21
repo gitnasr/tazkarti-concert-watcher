@@ -70,6 +70,12 @@ function sanitizeEventsPayload(payload: unknown): EventRecord[] {
     return {
       id: record.id,
       name: record.name,
+      description:
+        typeof record.description === "string"
+          ? record.description
+          : typeof record.summary === "string"
+            ? record.summary
+            : undefined,
       startDate: typeof record.startDate === "string" ? record.startDate : undefined,
       minimumPrice:
         typeof record.minimumPrice === "number" ? record.minimumPrice : undefined,
